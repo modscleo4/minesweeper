@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" theme="system">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+    <meta name="description" content="Minesweeper.js"/>
+    <meta name="keywords" content="html, html5, css, css3, js, vue, vuejs"/>
+    <meta name="robots" content="index"/>
+    <meta name="author" content="Modscleo4"/>
+
+    <title>Minesweeper</title>
+
+    <!-- Bootstrap 4.5.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Font Awesome 4.7.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/themes/light.css"/>
+    <link rel="stylesheet" href="css/themes/dark.css"/>
+
+    <link rel="manifest" href="manifest.json"/>
+
+    <link rel="icon" href="favicon.png"/>
+</head>
+
+<body>
+<script type="text/javascript" src="js/theme.js"></script>
+
+<div id="app">
+    <div class="game-over" v-if="lost" @click="lost = false; regenerateArray()">
+        <p>Click to play again.</p>
+    </div>
+
+    <div class="game-over" v-if="won" @click="won = false; regenerateArray()">
+        <p>Click to play again.</p>
+    </div>
+
+    <div class="menu" v-if="!gamemode">
+        <div>
+            <div class="form-group form-row">
+                <label for="input_m" class="col-md-4 col-form-label">Rows</label>
+                <input class="form-control col-md-8" type="text" id="input_m" name="m" v-model="config.m"/>
+            </div>
+
+            <div class="form-group form-row">
+                <label for="input_n" class="col-md-4 col-form-label">Columns</label>
+                <input class="form-control col-md-8" type="text" id="input_n" name="n" v-model="config.n"/>
+            </div>
+
+            <div class="form-group form-row">
+                <label for="input_bombs" class="col-md-4 col-form-label">Bombs</label>
+                <input class="form-control col-md-8" type="text" id="input_bombs" name="bombs" v-model="config.bombs"/>
+            </div>
+
+            <div class="form-row">
+                <button type="button" class="btn btn-primary col-md-12" @click="play">Play</button>
+            </div>
+        </div>
+    </div>
+
+    <header v-if="gamemode">
+        <div>
+            <span><i class="fa fa-bomb"></i> {{ config.bombs - flags }}</span>
+        </div>
+        
+        <div>
+            <button type="button" class="btn btn-primary col-md-12" @click="play">Play</button>
+        </div>
+
+        <div>
+            <i class="fa fa-clock-o"></i> {{ timer }}
+        </div>
+    </header>
+
+    <table>
+        <tr v-if="gamemode" v-for="(field_row, i) in field">
+            <td :id="`cell_${i}_${j}`" v-for="(field_cell, j) in field_row" class="field_cell"
+                :class="[{'normal': field_flag[i][j] === 1, 'hidden': field_flag[i][j] === 0, 'visible': field_flag[i][j] === 1, 'flag': field_flag[i][j] === 2, 'question': field_flag[i][j] === 3}, `v_${field_cell}`]"
+                @contextmenu.prevent="toggleFlag(i, j)" @click="clickAt(i, j)"
+                @mouseenter="hover(i, j)" @mouseleave="hoverout(i, j)">
+                <div class="div-field-cell" v-html="format_val(i, j)"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.0/vue.global.prod.js"></script>
+
+<script type="text/javascript" src="js/minesweeper.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/ws.js"></script>
+</body>
+</html>

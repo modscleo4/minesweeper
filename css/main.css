@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14pt;
+    margin: 0;
+    scroll-behavior: smooth;
+    /* overflow-x: hidden; */
+    background-size: cover;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%) no-repeat 50% 50%;
+    color: var(--text-color);
+    padding-right: 0 !important; /* Because of Bootstrap Modals */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-color-hover);
+    text-decoration: underline;
+}
+
+.modal-content {
+    background-color: var(--even);
+}
+
+.modal-content .close {
+    color: var(--text-color) !important;
+}
+
+.modal-header {
+    border-color: var(--odd);
+}
+
+.custom-select {
+    background: var(--custom-select-bg) no-repeat right .75rem center/8px 10px;
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    border-color: var(--input-border-color);
+}
+
+.custom-control-label::before {
+    background-color: var(--input-background-color);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b3b3b;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #262626;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #161616;
+}
+
+::-webkit-scrollbar-track {
+    background: #b5b5b5;
+    border: none;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.game-over {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    font-size: 4em;
+    cursor: pointer;
+    backdrop-filter: blur(1px);
+    text-align: center;
+}
+
+.menu {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    backdrop-filter: blur(1px);
+}
+
+#app {
+    width: 100%;
+    padding: 16px;
+    min-width: 400px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 8px;
+    margin-bottom: 16px;
+    justify-items: center;
+    align-items: center;
+}
+
+table {
+    font-family: monospace;
+    user-select: none;
+    background-color: var(--background-color);/*rgba(255, 255, 255, 0.05);*/
+}
+
+.field_cell {
+    cursor: pointer;
+    padding: 4px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid var(--text-color);
+    min-width: 2em;
+    min-height: 2em;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.field_cell:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.field_cell:active:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.field_cell .div-field-cell {
+    visibility: hidden;
+}
+
+.field_cell.visible {
+    cursor: unset;
+    border-style: dashed;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.field_cell.visible .div-field-cell,
+.field_cell.flag .div-field-cell,
+.field_cell.question .div-field-cell {
+    visibility: unset;
+    text-shadow: 0px 0px 16px rgb(255, 255, 255);
+}
+
+.field_cell.hidden.hovering,
+.field_cell.flag.hovering,
+.field_cell.question.hovering {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.field_cell.v_-1 {
+    color: darkgray;
+}
+
+/* .field_cell.v_0 {
+    
+} */
+
+.field_cell.v_1 {
+    color: blue;
+}
+
+.field_cell.v_2 {
+    color: green;
+}
+
+.field_cell.v_3 {
+    color: red;
+}
+
+.field_cell.v_4 {
+    color: darkblue;
+}
+
+.field_cell.v_5 {
+    color: darkred;
+}
+
+.field_cell.v_6 {
+    color: darkcyan;
+}
+
+.field_cell.v_7 {
+    color: purple;
+}
+
+.field_cell.v_8 {
+    color: black;
+}
+
+.field_cell.flag {
+    color: red;
+    cursor: unset;
+}
+
+.field_cell.question {
+    color: yellow;
+}
+
+footer {
+    padding: 24px 0;
+    font-size: 0.85em;
+}
+
+footer p {
+    margin: 0;
+}
+
+@media (max-width: 400px) {
+    .sidebar.open {
+        width: 100%;
+    }
+}
