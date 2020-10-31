@@ -84,6 +84,8 @@ const app = Vue.createApp({
     methods: {
         play: function () {
             this.gamemode = 'sp';
+            this.won = false;
+            this.lost = false;
             this.regenerateArray();
         },
 
@@ -103,6 +105,12 @@ const app = Vue.createApp({
             }
 
             [this._field, this._field_flag] = generateArray(this.seed, this.config.m, this.config.n);
+        },
+
+        storeRecord: function () {
+            const records = JSON.parse(localStorage.getItem('records')) ?? [];
+            records.push({won: this.won, time: this.timer, date: Date.now()});
+            localStorage.setItem('records', JSON.stringify(records));
         },
 
         format_val: function (i, j) {
@@ -182,6 +190,7 @@ const app = Vue.createApp({
 
                 if (this.gamemode === 'sp') {
                     this.lost = true;
+                    this.storeRecord();
                     clearInterval(timerFn);
                     timerFn = null;
                 }
@@ -193,6 +202,7 @@ const app = Vue.createApp({
 
             if (this.gamemode === 'sp' && this.flags === this.config.bombs && only_flags(this._field_flag, this.config.m, this.config.n)) {
                 this.won = true;
+                this.storeRecord();
                 clearInterval(timerFn);
                 timerFn = null;
             }
@@ -200,6 +210,10 @@ const app = Vue.createApp({
 
         toggleFlag: function (i, j) {
             sendToggleFlag(i, j);
+
+            if (this.won || this.lost) {
+                return;
+            }
 
             if (this._field_flag[i][j] === 1) {
                 return;
@@ -210,8 +224,9 @@ const app = Vue.createApp({
                     this._field_flag[i][j] = 2;
                     this.flags++;
 
-                    if (this.flags === this.config.bombs && only_flags(this._field_flag, this.config.m, this.config.n)) {
+                    if (this.gamemode === 'sp' && this.flags === this.config.bombs && only_flags(this._field_flag, this.config.m, this.config.n)) {
                         this.won = true;
+                        this.storeRecord();
                         clearInterval(timerFn);
                         timerFn = null;
                     }

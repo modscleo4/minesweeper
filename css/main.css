@@ -15,7 +15,7 @@ body {
     /* overflow-x: hidden; */
     background-size: cover;
     background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%) no-repeat 50% 50%;
-    color: var(--text-color);
+    color: var(--btn-text-color);
     padding-right: 0 !important; /* Because of Bootstrap Modals */
 }
 
@@ -84,25 +84,6 @@ a:hover {
     background: transparent;
 }
 
-.game-over {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.25);
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-color);
-    font-size: 4em;
-    cursor: pointer;
-    backdrop-filter: blur(1px);
-    text-align: center;
-}
-
 .menu {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.25);
@@ -115,7 +96,6 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
     backdrop-filter: blur(1px);
 }
 
@@ -139,6 +119,28 @@ header {
     align-items: center;
 }
 
+.game-container {
+    position: relative;
+}
+
+.game-over {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    cursor: unset;
+    backdrop-filter: blur(1px);
+    text-align: center;
+}
+
 table {
     font-family: monospace;
     user-select: none;
@@ -150,18 +152,18 @@ table {
     padding: 4px;
     margin: 0;
     text-align: center;
-    border: 1px solid var(--text-color);
+    border: 1px solid var(--cell-border-color);
     min-width: 2em;
     min-height: 2em;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--cell-background-color);
 }
 
 .field_cell:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: var(--cell-background-color-hover);
 }
 
 .field_cell:active:hover {
-    background-color: rgba(255, 255, 255, 0.10);
+    background-color: var(--cell-background-color-mousedown);
 }
 
 .field_cell .div-field-cell {
@@ -178,7 +180,7 @@ table {
 .field_cell.flag .div-field-cell,
 .field_cell.question .div-field-cell {
     visibility: unset;
-    text-shadow: 0px 0px 16px rgb(255, 255, 255);
+    text-shadow: 0 0 16px var(--text-color);
 }
 
 .field_cell.hidden.hovering,
